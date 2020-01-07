@@ -1,14 +1,22 @@
 <template>
     <div class="tab-bar-item">
-        <!-- <h1>我是tabbar组件</h1> -->
-        <slot name="item-icon"></slot>
-        <slot name="item-text"></slot>
+        <!-- 插槽必然被替换,使用div进行包裹 -->
+        <div v-if="!isActive"><slot v-if="!isActive" name="item-icon"></slot></div>
+        <div v-else><slot name="item-icon-active"></slot></div>
+        <div :class="{active:isActive}">
+            <slot name="item-text"></slot>
+        </div>    
     </div>
 </template>
 
 <script>
     export default {
-        
+        name:'TabBarItem',
+        data() {
+            return {
+                isActive: true
+            }
+        },
     }
 </script>
 
@@ -24,6 +32,9 @@
             margin-top: 3px;
             // vertical-align: middle;
             // margin-bottom: 2px;
+        }
+        .active{
+            color: red;
         }
     }
 </style>
