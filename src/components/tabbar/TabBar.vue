@@ -3,7 +3,7 @@
         <!-- 父组件 里面存放 slot的内容 -->
         <slot></slot>
     </div>
-</template>
+</template> 
 
 <script>
     export default {
