@@ -1,9 +1,9 @@
 <template>
-    <div class="tab-bar-item">
+    <div class="tab-bar-item" @click="itemClick">
         <!-- 插槽必然被替换,使用div进行包裹 -->
         <div v-if="!isActive"><slot v-if="!isActive" name="item-icon"></slot></div>
         <div v-else><slot name="item-icon-active"></slot></div>
-        <div :class="{active:isActive}">
+        <div :style="activeStyle">
             <slot name="item-text"></slot>
         </div>    
     </div>
@@ -14,7 +14,28 @@
         name:'TabBarItem',
         data() {
             return {
-                isActive: true
+                // isActive: true
+            }
+        },
+        props:{
+            path: String,
+            activeColor:{
+                type:String,
+                default:'red'
+            }
+        },
+        computed: {
+            isActive(){
+                // (/home) -> item1(/home)
+                return this.$route.path.indexOf(this.path) !== -1
+            },
+            activeStyle(){
+                return this.isActive ? { color:this.activeColor} : {}
+            }
+        },
+        methods: {
+            itemClick(){
+                this.$router.replace(this.path)
             }
         },
     }
@@ -33,8 +54,8 @@
             // vertical-align: middle;
             // margin-bottom: 2px;
         }
-        .active{
-            color: red;
-        }
+        // .active{
+        //     color: red;
+        // }
     }
 </style>
